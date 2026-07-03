@@ -10,6 +10,7 @@ Start every task by reading:
 Then choose the relevant mode:
 
 - Offline prep: `skills/offline-campaign-prep/SKILL.md`
+- PDF to Foundry: `skills/pdf-to-foundry/SKILL.md`
 - Live Foundry DM: `skills/live-foundry-dm/SKILL.md`
 - Post-session processing: `skills/post-session-processing/SKILL.md`
 - Maps, characters, plots: `skills/maps-characters-plots/SKILL.md`

@@ -26,6 +26,12 @@ For offline prep, ask your agent to use:
 Act as Uncle Yev. Read AGENTS.md, then use skills/offline-campaign-prep/SKILL.md to prepare my next FoundryVTT session.
 ```
 
+For a PDF conversion, use the Claude slash command `/pdf-to-foundry` or ask:
+
+```text
+Use skills/pdf-to-foundry/SKILL.md to convert this adventure PDF into a play-ready FoundryVTT campaign package.
+```
+
 For live table control, configure your Foundry target first:
 
 ```bash
@@ -51,11 +57,20 @@ Uncle Yev stores private campaign state in `memory/uncle-yev-ledger.local.md`, w
 
 Uncle Yev should surprise players without betraying them. Twists must be foreshadowed, choices must matter, and the campaign memory must outlast any single session.
 
+## Skills
+
+- `offline-campaign-prep`: Builds or expands sessions outside live play with Foundry-ready scenes, NPCs, maps, encounters, traps, loot, scripts, and runbooks.
+- `pdf-to-foundry`: Converts user-provided RPG PDFs into play-ready FoundryVTT campaign packages with page references, scenes, journals, actors, items, traps, loot, maps, and import steps.
+- `maps-characters-plots`: Creates maps, characters, NPCs, factions, villains, monsters, loot, traps, and Uncle Yev-style twists.
+- `live-foundry-dm`: Runs or assists live Foundry sessions by observing table state, speaking as NPCs, moving tokens, rolling dice, applying damage/conditions, switching scenes, and taking notes within permission boundaries.
+- `post-session-processing`: Turns transcripts, recordings, chat logs, notes, and feedback into session summaries, memory updates, journal updates, NPC changes, loot logs, and next-session prep.
+- `live-speech-design`: Researches or designs speech-to-text and text-to-speech support so Uncle Yev can hear players and reply during live sessions.
+
 ## Repository Map
 
 - `AGENTS.md`: default operating instructions for Codex-style agents.
 - `CLAUDE.md`: Claude-friendly entrypoint and mode routing.
-- `skills/`: specialized AI DM skills for prep, live play, maps/NPCs/plots, post-session work, and future voice design.
+- `skills/`: specialized AI DM skills for PDF conversion, prep, live play, maps/NPCs/plots, post-session work, and future voice design.
 - `scripts/`: Foundry live control and session ingestion helpers.
 - `docs/`: architecture, Foundry target setup, banner prompt, and live speech research notes.
 - `memory/uncle-yev-ledger.md`: public ledger template.

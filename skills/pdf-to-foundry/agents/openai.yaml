@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDF to Foundry"
+  short_description: "Convert PDFs into Foundry prep"
+  default_prompt: "Use $pdf-to-foundry to convert this adventure PDF into a play-ready FoundryVTT campaign package."

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added `pdf-to-foundry` skill and `/pdf-to-foundry` Claude command for converting RPG PDFs into play-ready FoundryVTT campaigns.
+- Added README skill catalog.
+
 ## 0.1.0
 
 - Initial public release.
