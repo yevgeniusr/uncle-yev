@@ -1,0 +1,42 @@
+{
+  "name": "uncle-yev",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "AI dungeon master plugin helpers for FoundryVTT campaign prep and live table control.",
+  "license": "AGPL-3.0-or-later",
+  "author": "Yev Rachkovan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yevgeniusr/uncle-yev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yevgeniusr/uncle-yev/issues"
+  },
+  "homepage": "https://github.com/yevgeniusr/uncle-yev#readme",
+  "keywords": [
+    "codex-plugin",
+    "claude",
+    "dnd",
+    "dungeons-and-dragons",
+    "foundry-vtt",
+    "foundryvtt",
+    "ai-dm",
+    "rpg"
+  ],
+  "scripts": {
+    "check": "node --check scripts/foundry_live_control.mjs && node --check scripts/ingest_session_notes.mjs && node --check scripts/append_memory.mjs",
+    "live:snapshot": "node scripts/foundry_live_control.mjs snapshot",
+    "live:say": "node scripts/foundry_live_control.mjs say",
+    "live:npc": "node scripts/foundry_live_control.mjs npc",
+    "live:scene": "node scripts/foundry_live_control.mjs scene",
+    "live:move": "node scripts/foundry_live_control.mjs move",
+    "live:hide": "node scripts/foundry_live_control.mjs hide",
+    "live:damage": "node scripts/foundry_live_control.mjs damage",
+    "live:condition": "node scripts/foundry_live_control.mjs condition",
+    "session:ingest": "node scripts/ingest_session_notes.mjs",
+    "memory:add": "node scripts/append_memory.mjs"
+  },
+  "optionalDependencies": {
+    "playwright": "^1.61.1"
+  }
+}

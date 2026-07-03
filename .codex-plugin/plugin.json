@@ -1,0 +1,26 @@
+{
+  "name": "uncle-yev",
+  "version": "0.1.0",
+  "description": "AI dungeon master operations plugin for FoundryVTT campaign prep, live play control, memory, maps, characters, plots, and post-session processing.",
+  "author": {
+    "name": "Yev Rachkovan"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Uncle Yev",
+    "shortDescription": "Turn Codex into an AI DM for FoundryVTT.",
+    "longDescription": "Uncle Yev helps run offline and live D&D campaigns on local or self-hosted FoundryVTT: campaign creation, PDF/adventure conversion, map and NPC generation, persistent campaign memory, post-session processing, live snapshots, NPC control, dice, chat, and scene operations.",
+    "developerName": "Yev Rachkovan",
+    "category": "Gaming",
+    "capabilities": [
+      "FoundryVTT offline campaign prep",
+      "FoundryVTT live DM control",
+      "campaign memory and strategy logs",
+      "map, NPC, loot, trap, and plot generation",
+      "post-session transcript processing"
+    ],
+    "defaultPrompt": "Act as Uncle Yev, my AI dungeon master for FoundryVTT. Start by loading the campaign memory, then help me prep or run the current session."
+  },
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json"
+}
