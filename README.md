@@ -36,6 +36,14 @@ By default this reads `../campaigns/the-unwritten-degree` and writes private gen
 
 Install the Foundry-side bridge by symlinking or copying `foundry-module/` into Foundry's `Data/modules/uncle-yev`, then enable **Uncle Yev Bridge** in the world.
 
+For local Foundry installs, Uncle Yev can do the filesystem part himself:
+
+```bash
+npm run install:foundry-module
+```
+
+Use `FOUNDRY_DATA_PATH` or `FOUNDRY_MODULES_PATH` when Foundry's data directory is not the OS default. After install, restart/reload Foundry if needed and enable **Uncle Yev Bridge** in Manage Modules. With only remote Foundry web credentials, Uncle Yev can log in and verify/enable existing modules, but installing new local module files also requires server filesystem, hosting-panel, SSH, or package-manifest access.
+
 For a PDF conversion, use the Claude slash command `/pdf-to-foundry` or ask:
 
 ```text

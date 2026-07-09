@@ -6,9 +6,10 @@ Uncle Yev owns the campaign-to-Foundry prep workflow. The active campaign repo i
 
 1. Edit campaign JSON in the active campaign repo, normally `../campaigns/the-unwritten-degree/raw/foundry/`.
 2. Run `npm run prep:foundry`.
-3. Review the generated prep packet in the campaign repo `wiki/session-prep/`.
-4. Make sure `foundry-module/` is installed in Foundry as `Data/modules/uncle-yev`.
-5. In Foundry, enable **Uncle Yev Bridge** and run `game.modules.get("uncle-yev").api.seed()` as GM, or use an Uncle Yev live-control wrapper that calls the same API.
+3. Run `npm run install:foundry-module` when Foundry's data directory is local or mounted.
+4. Review the generated prep packet in the campaign repo `wiki/session-prep/`.
+5. Make sure **Uncle Yev Bridge** is enabled in the world.
+6. Run `game.modules.get("uncle-yev").api.seed()` as GM, or use an Uncle Yev live-control wrapper that calls the same API.
 
 The seeder is intentionally conservative:
 

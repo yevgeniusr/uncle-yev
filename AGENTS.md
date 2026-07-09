@@ -41,6 +41,12 @@ Active campaigns must live in the private campaigns repository, not inside Found
 
 Before saying a player can see or play a scene, verify the actual player experience, not just the GM view.
 
+- If the user provides Foundry credentials and asks Uncle Yev to run or support play, first verify the Uncle Yev Bridge module is installed and enabled. Do not assume it exists.
+- For local Foundry or any environment with filesystem access, run `npm run prep:foundry`, then `npm run install:foundry-module`. Use `FOUNDRY_DATA_PATH` or `FOUNDRY_MODULES_PATH` when Foundry's data directory is not the OS default.
+- After installing the module, Foundry may need a restart or world reload before it appears in Manage Modules.
+- Enable **Uncle Yev Bridge** in the Foundry world before live play. If browser automation is available and credentials were provided, use it to enable the module through Foundry's module-management UI.
+- Verify the bridge with `npm run live:snapshot`. The bridge is ready only when `game.modules.get("uncle-yev").api.live` responds.
+- If only remote Foundry web credentials are available and the module is not already installable through a manifest URL, state the missing access plainly: remote web credentials alone cannot upload arbitrary local module files. Request server filesystem, SSH, hosting-panel, or package-manifest access, then continue installation.
 - Confirm the player user exists on the join screen and owns the intended player character actor.
 - Confirm the player user is active after joining; do not rely on GM-only accounts such as `Codex DM` or `Gamemaster`.
 - Confirm the active scene is correct, the game is not paused unless intentionally paused, and the player token is present and visible.

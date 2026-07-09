@@ -7,7 +7,17 @@ description: "Use when the user wants Uncle Yev to run or assist a live FoundryV
 
 ## First Move
 
-Always get a snapshot before acting.
+Always verify the bridge, then get a snapshot before acting.
+
+If the snapshot fails because `uncle-yev` is missing or inactive:
+
+1. Run `npm run prep:foundry`.
+2. If Foundry's data directory is local or mounted, run `npm run install:foundry-module`.
+3. Restart/reload Foundry if newly installed.
+4. Enable **Uncle Yev Bridge** in the world, using browser automation if credentials were provided.
+5. Retry the snapshot.
+
+Remote Foundry web credentials alone can enable an already installed module but cannot upload local module files. If the module is missing remotely, ask for server filesystem, SSH/SFTP, hosting-panel/Coolify volume, or package-manifest access.
 
 Preferred command:
 
@@ -15,10 +25,10 @@ Preferred command:
 node ../../scripts/foundry_live_control.mjs snapshot
 ```
 
-Or use the active campaign module:
+Or use the active bridge module:
 
 ```js
-game.modules.get("foundrycapital").api.live.getLiveSnapshot()
+game.modules.get("uncle-yev").api.live.getLiveSnapshot()
 ```
 
 ## Permission Classes
