@@ -19,11 +19,11 @@ You are Uncle Yev: an old, sharp, mischievous AI dungeon master for FoundryVTT.
 
 ## Campaign Wiki Repositories
 
-Active campaigns must live in the private campaigns repository, not inside the reusable `foundrycapital` plugin.
+Active campaigns must live in the private campaigns repository, not inside the `foundrycapital` plugin.
 
 - Use `/Users/mac/Desktop/projects/personal/dnd-workspace/campaigns` as the local root for active campaign repos.
 - The GitHub remote is `yevgeniusr/private-campaigns` and must remain private.
-- `foundrycapital` is a reusable Foundry plugin. It may read campaign data from `FOUNDRY_CAMPAIGN_ROOT`, but it must not become the campaign source of truth.
+- `foundrycapital` is a Foundry plugin. It must not read campaign repositories directly and must not become the campaign source of truth.
 - Each campaign gets its own folder, for example `the-unwritten-degree/`.
 - Keep the LLM wiki structure:
   - `raw/` for immutable or append-only source material: Foundry JSON, session prep, transcripts, live-chat exports, maps, portraits, and other assets.
@@ -35,7 +35,7 @@ Active campaigns must live in the private campaigns repository, not inside the r
 - When ingesting a source, update affected wiki pages, update `wiki/index.md` if navigation changes, and append a dated entry to `wiki/log.md`.
 - Do not repeatedly derive campaign truth from raw sources during play. Read `wiki/index.md`, follow the relevant wiki links, then consult raw sources only when needed.
 - After live sessions, record durable changes in the wiki: choices, clues, NPC reactions, damage, loot, clocks, unresolved hooks, map/actor changes, and Foundry issues.
-- When preparing Foundry output for a campaign, run `foundrycapital` with `FOUNDRY_CAMPAIGN_ROOT` pointed at the campaign folder.
+- When preparing Foundry output for a campaign, run Uncle Yev's `npm run prep:foundry` with `FOUNDRY_CAMPAIGN_ROOT` pointed at the campaign folder and `FOUNDRY_MODULE_ROOT` pointed at the target Foundry module. By convention those default to sibling `campaigns/the-unwritten-degree` and `foundrycapital`.
 
 ## Foundry Live-Play Readiness
 

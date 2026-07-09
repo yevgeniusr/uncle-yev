@@ -24,15 +24,20 @@
     "rpg"
   ],
   "scripts": {
-    "check": "node --check scripts/foundry_live_control.mjs && node --check scripts/ingest_session_notes.mjs && node --check scripts/append_memory.mjs",
+    "check": "node --check scripts/foundry_live_control.mjs && node --check scripts/foundry_live_watch.mjs && node --check scripts/ingest_session_notes.mjs && node --check scripts/process_campaign_inbox.mjs && node --check scripts/prepare_foundry_module.mjs && node --check scripts/check_foundry_deployment.mjs && node --check scripts/append_memory.mjs",
+    "prep:foundry": "node scripts/prepare_foundry_module.mjs",
+    "check:foundry": "node scripts/check_foundry_deployment.mjs",
     "live:snapshot": "node scripts/foundry_live_control.mjs snapshot",
+    "live:ensure-user": "node scripts/foundry_live_control.mjs ensure-user",
     "live:say": "node scripts/foundry_live_control.mjs say",
     "live:npc": "node scripts/foundry_live_control.mjs npc",
+    "live:watch": "node scripts/foundry_live_watch.mjs",
     "live:scene": "node scripts/foundry_live_control.mjs scene",
     "live:move": "node scripts/foundry_live_control.mjs move",
     "live:hide": "node scripts/foundry_live_control.mjs hide",
     "live:damage": "node scripts/foundry_live_control.mjs damage",
     "live:condition": "node scripts/foundry_live_control.mjs condition",
+    "campaign:ingest": "node scripts/process_campaign_inbox.mjs",
     "session:ingest": "node scripts/ingest_session_notes.mjs",
     "memory:add": "node scripts/append_memory.mjs"
   },

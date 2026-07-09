@@ -1,0 +1,38 @@
+# Between-Session Prep Workflow
+
+Uncle Yev owns the campaign-to-Foundry prep workflow. The active campaign repo is the campaign source of truth. `foundrycapital` is only the target Foundry module. Foundry is the runtime table.
+
+## Daily Prep Loop
+
+1. Edit campaign JSON in the active campaign repo, normally `../campaigns/the-unwritten-degree/raw/foundry/`.
+2. Run `npm run prep:foundry`.
+3. Review the generated prep packet in the campaign repo `wiki/session-prep/`.
+4. Build the Foundry module from its own repo with `npm run build`.
+5. In Foundry, open **Foundry Capital DM Ops** and click **Seed Prep**.
+
+The seeder is intentionally conservative:
+
+- NPCs are created only if missing.
+- Items are created only if missing.
+- Journals are updated from source every seed.
+- Staging scenes are created only if missing.
+
+This keeps table-time edits to actors, items, and maps from being overwritten while letting prep notes stay current.
+
+## Source Files
+
+- `raw/foundry/world.json`: campaign premise, principles, open threads.
+- `raw/foundry/npcs.json`: durable NPC motives, secrets, voice, and Foundry actor basics.
+- `raw/foundry/items.json`: campaign-specific items.
+- `raw/foundry/factions.json`: agendas and pressure clocks.
+- `raw/foundry/locations.json`: sensory framing and location truths.
+- `raw/foundry/quests.json`: quest journals and beats.
+- `raw/foundry/scenes.json`: staging scene definitions.
+- `raw/foundry/session-prep/*.json`: next-session checklist and targets.
+
+## Generated Files
+
+- `<foundry-module>/src/data/generated/campaign-content.generated.ts`
+- `../campaigns/<campaign>/wiki/session-prep/<session-id>.md`
+
+Do not edit generated files directly.

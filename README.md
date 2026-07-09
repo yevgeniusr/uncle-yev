@@ -26,6 +26,14 @@ For offline prep, ask your agent to use:
 Act as Uncle Yev. Read AGENTS.md, then use skills/offline-campaign-prep/SKILL.md to prepare my next FoundryVTT session.
 ```
 
+To compile a campaign wiki into a Foundry module seed bundle:
+
+```bash
+npm run prep:foundry
+```
+
+By default this reads `../campaigns/the-unwritten-degree` and writes generated data/assets into `../foundrycapital`. Override with `FOUNDRY_CAMPAIGN_ROOT` and `FOUNDRY_MODULE_ROOT` when targeting another campaign or module.
+
 For a PDF conversion, use the Claude slash command `/pdf-to-foundry` or ask:
 
 ```text
