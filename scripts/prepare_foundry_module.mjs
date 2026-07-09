@@ -31,6 +31,12 @@ function readJsonFiles(relativeDir) {
     .map((file) => readJson(path.join(relativeDir, file)));
 }
 
+function readOptionalJson(relativePath, fallback) {
+  const filePath = path.join(campaignDir, relativePath);
+  if (!fs.existsSync(filePath)) return fallback;
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
 function assertArray(name, value) {
   if (!Array.isArray(value)) {
     throw new Error(`${name} must be an array`);
@@ -351,6 +357,61 @@ function buildTrapJournal(session, trap) {
   };
 }
 
+function buildTrapReferenceJournal(trap) {
+  return {
+    name: `Trap - ${trap.name}`,
+    folderName: `${worldTitle()} Traps`,
+    content: [
+      `<h1>${escapeHtml(trap.name)}</h1>`,
+      `<p><strong>Source Pages:</strong> ${escapeHtml((trap.sourcePages ?? []).join(", ") || "Unknown")}</p>`,
+      `<p><strong>Location:</strong> ${escapeHtml(trap.location ?? trap.scene ?? "Unknown")}</p>`,
+      section(
+        "Trap Card",
+        definitionList([
+          ["Trigger", trap.trigger ?? ""],
+          ["Detect", trap.detect ?? ""],
+          ["Disable", trap.disable ?? ""],
+          ["Effect", trap.effect ?? ""],
+          ["Saving Throw", trap.savingThrow ?? ""],
+          ["Damage/Condition", trap.damage ?? ""],
+          ["Counterplay", trap.counterplay ?? ""],
+          ["Reset", trap.reset ?? ""],
+        ]),
+      ),
+      trap.clues ? section("Foreshadowing Clues", paragraphList(trap.clues)) : "",
+    ].join("\n"),
+  };
+}
+
+function buildHandoutJournal(handout) {
+  return {
+    name: `Handout - ${handout.title}`,
+    folderName: `${worldTitle()} Handouts`,
+    content: [
+      `<h1>${escapeHtml(handout.title)}</h1>`,
+      `<p><strong>Source Pages:</strong> ${escapeHtml((handout.sourcePages ?? []).join(", ") || "Unknown")}</p>`,
+      section("Player Visible", `<div class="readaloud"><p>${escapeHtml(handout.playerVisibleSummary ?? "")}</p></div>`),
+      section("GM Notes", `<p>${escapeHtml(handout.gmOnlyNotes ?? "")}</p>`),
+    ].join("\n"),
+  };
+}
+
+function buildSourceJournal(journal) {
+  return {
+    name: journal.title,
+    folderName: `${worldTitle()} Journals`,
+    content: [
+      `<h1>${escapeHtml(journal.title)}</h1>`,
+      `<p><strong>Source Pages:</strong> ${escapeHtml((journal.sourcePages ?? []).join(", ") || "Unknown")}</p>`,
+      section("Player Visible", `<div class="readaloud"><p>${escapeHtml(journal.playerVisibleSummary ?? "")}</p></div>`),
+      section("GM Notes", `<p>${escapeHtml(journal.gmOnlyNotes ?? "")}</p>`),
+      journal.handouts ? section("Handouts", paragraphList(journal.handouts)) : "",
+      journal.checksAndDcs ? section("Checks and DCs", paragraphList(journal.checksAndDcs)) : "",
+      journal.secretsToReveal ? section("Secrets To Reveal", paragraphList(journal.secretsToReveal)) : "",
+    ].join("\n"),
+  };
+}
+
 function buildNpcScriptJournal(session) {
   return {
     name: `${session.title} - NPC Scripts`,
@@ -498,6 +559,9 @@ const factions = readJson("factions.json");
 const locations = readJson("locations.json");
 const quests = readJson("quests.json");
 const scenes = readJson("scenes.json");
+const traps = readOptionalJson("traps.json", []);
+const handouts = readOptionalJson("handouts.json", []);
+const sourceJournals = readOptionalJson("journals.json", []);
 const sessionPreps = readJsonFiles("session-prep");
 const sessions = readJsonFiles("sessions");
 const sessionPrep = sessionPreps.at(-1);
@@ -508,6 +572,9 @@ assertArray("factions", factions);
 assertArray("locations", locations);
 assertArray("quests", quests);
 assertArray("scenes", scenes);
+assertArray("traps", traps);
+assertArray("handouts", handouts);
+assertArray("sourceJournals", sourceJournals);
 assertArray("sessionPreps", sessionPreps);
 assertArray("sessions", sessions);
 requiredString("world.title", world.title);
@@ -528,6 +595,9 @@ const generated = {
     ...quests.map(buildQuestJournal),
     ...factions.map(buildFactionJournal),
     ...locations.map(buildLocationJournal),
+    ...sourceJournals.map(buildSourceJournal),
+    ...handouts.map(buildHandoutJournal),
+    ...traps.map(buildTrapReferenceJournal),
     ...sessionPreps.map(buildSessionPrepJournal),
     ...sessions.flatMap(buildSessionJournals),
   ],

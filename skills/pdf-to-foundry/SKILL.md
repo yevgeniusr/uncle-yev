@@ -19,6 +19,7 @@ Turn a PDF into something a GM can run in Foundry without keeping the PDF open. 
 ## Workflow
 
 1. Identify target system, Foundry world/module, party level/count, conversion scope, and output path.
+   - If the user says an existing Foundry campaign/world already exists, treat its player characters as authoritative. Do not create, overwrite, or "helpfully complete" PC actors unless the user explicitly asks for a character-creation flow.
 2. Extract the PDF structure: title, table of contents, page count, chapters, keyed locations, encounters, appendices, maps, handouts, and stat blocks.
 3. Create a conversion manifest with PDF path, title, file hash if practical, extraction quality, page ranges, assumptions, and missing assets.
 4. Convert content into play objects:
@@ -37,6 +38,29 @@ Turn a PDF into something a GM can run in Foundry without keeping the PDF open. 
    - browser automation
    - manual import instructions
 7. Run the play-readiness gate before declaring done.
+
+## Iterative Hardening Loop
+
+For a full adventure conversion, do not stop after the first generated package. Run a tight prep loop until no critical gaps remain:
+
+1. Generate the campaign repo artifacts and Foundry JSON.
+2. Run the Uncle Yev prep builder against the target campaign root.
+3. Validate JSON shape, asset paths, scene dimensions, NPC completeness, trap completeness, and session runbook coverage.
+4. Inspect failures as skill/process failures, not only one-off data bugs. Patch this skill or its references when the miss could recur.
+5. Regenerate or repair artifacts.
+6. Rerun the builder and validator.
+7. Run a betabots-style readiness pass with GM/player personas when a live browser product run is not applicable.
+
+Record each loop in the campaign repo under `.betabots/`, `raw/foundry/pdf-imports/.../source-notes/`, or `wiki/log.md` so future agents know what was checked and what remains blocked.
+
+Minimum validator checks:
+
+- Every referenced map and portrait asset exists at the path Foundry will use.
+- Every scene has width, height, grid, token starts, walls or wall notes, lighting or lighting notes, exits, read-aloud text, linked context, and an explicit trap/hazard value even when the answer is "none".
+- Every NPC has a portrait, want, fear/secret, voice, relationship map, three table lines, Foundry stats, tactics, morale, and loot/carry notes.
+- Every trap has trigger, detection, disable, effect, save/damage, counterplay, reset/depletion, and foreshadowing clues.
+- Every item has where it appears and either a mechanical effect, table value, or vehicle/handout purpose.
+- Existing player actors are preserved. Generated content should add NPCs, scenes, journals, items, traps, and handouts only.
 
 ## Extraction Notes
 
