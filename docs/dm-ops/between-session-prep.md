@@ -1,14 +1,14 @@
 # Between-Session Prep Workflow
 
-Uncle Yev owns the campaign-to-Foundry prep workflow. The active campaign repo is the campaign source of truth. `foundrycapital` is only the target Foundry module. Foundry is the runtime table.
+Uncle Yev owns the campaign-to-Foundry prep workflow. The active campaign repo is the campaign source of truth. `foundry-module/` is the Foundry-side Uncle Yev Bridge module. Foundry is the runtime table.
 
 ## Daily Prep Loop
 
 1. Edit campaign JSON in the active campaign repo, normally `../campaigns/the-unwritten-degree/raw/foundry/`.
 2. Run `npm run prep:foundry`.
 3. Review the generated prep packet in the campaign repo `wiki/session-prep/`.
-4. Build the Foundry module from its own repo with `npm run build`.
-5. In Foundry, open **Foundry Capital DM Ops** and click **Seed Prep**.
+4. Make sure `foundry-module/` is installed in Foundry as `Data/modules/uncle-yev`.
+5. In Foundry, enable **Uncle Yev Bridge** and run `game.modules.get("uncle-yev").api.seed()` as GM, or use an Uncle Yev live-control wrapper that calls the same API.
 
 The seeder is intentionally conservative:
 
@@ -32,7 +32,7 @@ This keeps table-time edits to actors, items, and maps from being overwritten wh
 
 ## Generated Files
 
-- `<foundry-module>/src/data/generated/campaign-content.generated.ts`
+- `foundry-module/generated/campaign-content.local.js` ignored private output
 - `../campaigns/<campaign>/wiki/session-prep/<session-id>.md`
 
 Do not edit generated files directly.

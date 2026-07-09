@@ -2,13 +2,13 @@
 
 ## Decision
 
-Use Uncle Yev as the campaign prep and live-ops toolbelt. Use `foundrycapital` only as the Foundry runtime module. Use a separate campaign wiki repo as the campaign source of truth. Use `foundry-vtt-mcp` or browser automation as the operational bridge into the live world.
+Use Uncle Yev as the campaign prep and live-ops toolbelt. Use `foundry-module/` as the Foundry-side Uncle Yev Bridge module. Use a separate campaign wiki repo as the campaign source of truth. Use browser automation or future MCP integrations as the operational bridge into the live world.
 
 ## Phase 1: Between-Session Prep
 
 Campaign prep lives in checked-in JSON under the active campaign repo `raw/foundry/`. The generator converts it into:
 
-- Foundry-ready TypeScript data.
+- Foundry-ready JavaScript data loaded by the Uncle Yev Bridge module.
 - Human-readable session prep Markdown.
 
 The module seeds generated data into Foundry:
@@ -28,5 +28,5 @@ The first live daemon should ingest transcripts, create session reports, and upd
 ## Verification
 
 - `npm run prep:foundry`
-- `npm run build`
+- Enable the `uncle-yev` Foundry module
 - `npm run check:foundry`

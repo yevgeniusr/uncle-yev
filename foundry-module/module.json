@@ -1,0 +1,30 @@
+{
+  "id": "uncle-yev",
+  "title": "Uncle Yev Bridge",
+  "description": "Foundry-side bridge for Uncle Yev campaign prep, live table snapshots, chat replies, and controlled GM actions.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Yev Rachkovan"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/uncle-yev-bridge.js"
+  ],
+  "url": "https://github.com/yevgeniusr/uncle-yev",
+  "manifest": "",
+  "download": ""
+}

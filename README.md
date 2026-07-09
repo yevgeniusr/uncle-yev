@@ -26,13 +26,15 @@ For offline prep, ask your agent to use:
 Act as Uncle Yev. Read AGENTS.md, then use skills/offline-campaign-prep/SKILL.md to prepare my next FoundryVTT session.
 ```
 
-To compile a campaign wiki into a Foundry module seed bundle:
+To compile a campaign wiki into the Uncle Yev Foundry module seed bundle:
 
 ```bash
 npm run prep:foundry
 ```
 
-By default this reads `../campaigns/the-unwritten-degree` and writes generated data/assets into `../foundrycapital`. Override with `FOUNDRY_CAMPAIGN_ROOT` and `FOUNDRY_MODULE_ROOT` when targeting another campaign or module.
+By default this reads `../campaigns/the-unwritten-degree` and writes private generated data/assets into `foundry-module/`. Override with `FOUNDRY_CAMPAIGN_ROOT` and `FOUNDRY_MODULE_ROOT` only when targeting another campaign or another Uncle Yev module checkout.
+
+Install the Foundry-side bridge by symlinking or copying `foundry-module/` into Foundry's `Data/modules/uncle-yev`, then enable **Uncle Yev Bridge** in the world.
 
 For a PDF conversion, use the Claude slash command `/pdf-to-foundry` or ask:
 
@@ -58,7 +60,7 @@ Uncle Yev stores private campaign state in `memory/uncle-yev-ledger.local.md`, w
 
 - Local FoundryVTT at `http://localhost:30000`, `http://127.0.0.1:30000`, or another configured URL.
 - Self-hosted FoundryVTT over HTTPS, including Coolify deployments.
-- Foundry worlds with a module API such as `foundrycapital.api.live`.
+- Foundry worlds with the `uncle-yev` module enabled, exposing `game.modules.get("uncle-yev").api.live`.
 - Future MCP-backed Foundry servers, when configured in `.mcp.json`.
 
 ## Design Principle
@@ -79,7 +81,8 @@ Uncle Yev should surprise players without betraying them. Twists must be foresha
 - `AGENTS.md`: default operating instructions for Codex-style agents.
 - `CLAUDE.md`: Claude-friendly entrypoint and mode routing.
 - `skills/`: specialized AI DM skills for PDF conversion, prep, live play, maps/NPCs/plots, post-session work, and future voice design.
-- `scripts/`: Foundry live control and session ingestion helpers.
+- `foundry-module/`: the Foundry-side Uncle Yev Bridge module.
+- `scripts/`: Foundry live control, campaign prep, and session ingestion helpers.
 - `docs/`: architecture, Foundry target setup, banner prompt, and live speech research notes.
 - `memory/uncle-yev-ledger.md`: public ledger template.
 - `assets/banners/uncle-yev-banner.png`: selected project banner.

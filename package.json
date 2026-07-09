@@ -24,7 +24,7 @@
     "rpg"
   ],
   "scripts": {
-    "check": "node --check scripts/foundry_live_control.mjs && node --check scripts/foundry_live_watch.mjs && node --check scripts/ingest_session_notes.mjs && node --check scripts/process_campaign_inbox.mjs && node --check scripts/prepare_foundry_module.mjs && node --check scripts/check_foundry_deployment.mjs && node --check scripts/append_memory.mjs",
+    "check": "node --check foundry-module/scripts/uncle-yev-bridge.js && node --check scripts/foundry_live_control.mjs && node --check scripts/foundry_live_watch.mjs && node --check scripts/ingest_session_notes.mjs && node --check scripts/process_campaign_inbox.mjs && node --check scripts/prepare_foundry_module.mjs && node --check scripts/check_foundry_deployment.mjs && node --check scripts/append_memory.mjs",
     "prep:foundry": "node scripts/prepare_foundry_module.mjs",
     "check:foundry": "node scripts/check_foundry_deployment.mjs",
     "live:snapshot": "node scripts/foundry_live_control.mjs snapshot",

@@ -7,7 +7,7 @@ import { pathToFileURL } from "node:url";
 
 export const FOUNDRY_URL = process.env.FOUNDRY_URL || "https://rpg.rachkovan.com";
 export const SERVICE_UUID = process.env.COOLIFY_FOUNDRY_SERVICE_UUID || "d0gw8sos8c8sssgwk8wcosk8";
-export const MODULE_ID = process.env.FOUNDRY_LIVE_MODULE || "foundrycapital";
+export const MODULE_ID = process.env.FOUNDRY_LIVE_MODULE || "uncle-yev";
 export const LIVE_USER = process.env.FOUNDRY_LIVE_USER || "Codex DM";
 const LIVE_DEBUG = Boolean(process.env.FOUNDRY_LIVE_DEBUG);
 

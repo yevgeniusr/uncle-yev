@@ -41,10 +41,10 @@ Requires table consent:
 
 ## Implemented Live Bridge
 
-The `foundrycapital` module now exposes a GM-only live API:
+The `uncle-yev` Foundry module exposes a GM-only live API:
 
 ```text
-game.modules.get("foundrycapital").api.live
+game.modules.get("uncle-yev").api.live
 ```
 
 Available live methods:

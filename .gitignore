@@ -17,3 +17,6 @@ sessions/reports/*
 !sessions/inbox/.gitkeep
 !sessions/archive/.gitkeep
 !sessions/reports/.gitkeep
+
+foundry-module/generated/*.local.js
+foundry-module/assets/campaign/

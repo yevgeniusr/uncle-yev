@@ -4,13 +4,14 @@ import process from "node:process";
 
 const rootDir = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const defaultCampaignRoot = path.resolve(rootDir, "..", "campaigns", "the-unwritten-degree");
-const defaultModuleRoot = path.resolve(rootDir, "..", "foundrycapital");
+const defaultModuleRoot = path.resolve(rootDir, "foundry-module");
 const campaignRoot = path.resolve(process.env.FOUNDRY_CAMPAIGN_ROOT || defaultCampaignRoot);
 const campaignDir = path.join(campaignRoot, "raw", "foundry");
 const campaignAssetsDir = path.join(campaignRoot, "raw", "assets");
 const moduleRoot = path.resolve(process.env.FOUNDRY_MODULE_ROOT || defaultModuleRoot);
 const moduleCampaignAssetsDir = path.join(moduleRoot, "assets", "campaign");
-const generatedDir = path.join(moduleRoot, "src", "data", "generated");
+const generatedDir = path.join(moduleRoot, "generated");
+const flagScope = process.env.FOUNDRY_SEED_FLAG_SCOPE || "uncle-yev";
 const prepOutDir = process.env.FOUNDRY_CAMPAIGN_PREP_OUT
   ? path.resolve(process.env.FOUNDRY_CAMPAIGN_PREP_OUT)
   : path.join(campaignRoot, "wiki", "session-prep");
@@ -82,6 +83,10 @@ function section(title, body) {
   return `<h2 class="spaced">${escapeHtml(title)}</h2>\n${body}`;
 }
 
+function worldTitle() {
+  return world?.title ?? "Campaign";
+}
+
 function buildActorAction(action) {
   return {
     name: action.name,
@@ -144,7 +149,7 @@ function buildNpcActor(npc) {
       disposition: npc.foundry?.disposition ?? npc.disposition ?? 0,
     },
     flags: {
-      foundrycapital: {
+      [flagScope]: {
         sourceId: npc.id,
         faction: npc.faction,
         role: npc.role,
@@ -168,7 +173,7 @@ function buildItem(item) {
       properties: item.properties ?? {},
     },
     flags: {
-      foundrycapital: {
+      [flagScope]: {
         sourceId: item.id,
       },
     },
@@ -208,7 +213,7 @@ function buildCampaignDashboard({ world, factions, quests, locations }) {
 function buildQuestJournal(quest) {
   return {
     name: `Quest - ${quest.title}`,
-    folderName: "Foundry Capital Quests",
+    folderName: `${worldTitle()} Quests`,
     content: [
       `<h1>${escapeHtml(quest.title)}</h1>`,
       `<p><strong>Type:</strong> ${escapeHtml(quest.type)} | <strong>Difficulty:</strong> ${escapeHtml(quest.difficulty)}</p>`,
@@ -224,7 +229,7 @@ function buildQuestJournal(quest) {
 function buildFactionJournal(faction) {
   return {
     name: `Faction - ${faction.name}`,
-    folderName: "Foundry Capital Factions",
+    folderName: `${worldTitle()} Factions`,
     content: [
       `<h1>${escapeHtml(faction.name)}</h1>`,
       section("Agenda", `<p>${escapeHtml(faction.agenda)}</p>`),
@@ -240,7 +245,7 @@ function buildFactionJournal(faction) {
 function buildLocationJournal(location) {
   return {
     name: `Location - ${location.name}`,
-    folderName: "Foundry Capital Locations",
+    folderName: `${worldTitle()} Locations`,
     content: [
       `<h1>${escapeHtml(location.name)}</h1>`,
       section("Sensory Details", paragraphList(location.sensory)),
@@ -252,7 +257,7 @@ function buildLocationJournal(location) {
 function buildSessionPrepJournal(sessionPrep) {
   return {
     name: `Session Prep - ${sessionPrep.title}`,
-    folderName: "Foundry Capital Session Prep",
+    folderName: `${worldTitle()} Session Prep`,
     content: [
       `<h1>${escapeHtml(sessionPrep.title)}</h1>`,
       `<p><strong>Status:</strong> ${escapeHtml(sessionPrep.status)}</p>`,
@@ -273,7 +278,7 @@ function tableRows(items, cells) {
 function buildSessionRunbookJournal(session) {
   return {
     name: `${session.title} - DM Runbook`,
-    folderName: "Foundry Capital Session Prep",
+    folderName: `${worldTitle()} Session Prep`,
     content: [
       `<h1>${escapeHtml(session.title)}</h1>`,
       `<p><strong>Status:</strong> ${escapeHtml(session.status)} | <strong>Level:</strong> ${escapeHtml(session.levelRange)} | <strong>Duration:</strong> ${escapeHtml(session.expectedDuration)}</p>`,
@@ -299,7 +304,7 @@ function buildSessionRunbookJournal(session) {
 function buildLocationBeatJournal(session, location) {
   return {
     name: `${session.title} - Location - ${location.name}`,
-    folderName: "Foundry Capital Session Prep",
+    folderName: `${worldTitle()} Session Prep`,
     content: [
       `<h1>${escapeHtml(location.name)}</h1>`,
       `<p><strong>Scene:</strong> ${escapeHtml(location.scene)} | <strong>Purpose:</strong> ${escapeHtml(location.purpose)}</p>`,
@@ -312,7 +317,7 @@ function buildLocationBeatJournal(session, location) {
 function buildEncounterJournal(session, encounter) {
   return {
     name: `${session.title} - Encounter - ${encounter.name}`,
-    folderName: "Foundry Capital Encounters",
+    folderName: `${worldTitle()} Encounters`,
     content: [
       `<h1>${escapeHtml(encounter.name)}</h1>`,
       `<p><strong>Scene:</strong> ${escapeHtml(encounter.scene)} | <strong>Difficulty:</strong> ${escapeHtml(encounter.difficulty)}</p>`,
@@ -328,7 +333,7 @@ function buildEncounterJournal(session, encounter) {
 function buildTrapJournal(session, trap) {
   return {
     name: `${session.title} - Trap - ${trap.name}`,
-    folderName: "Foundry Capital Traps",
+    folderName: `${worldTitle()} Traps`,
     content: [
       `<h1>${escapeHtml(trap.name)}</h1>`,
       `<p><strong>Scene:</strong> ${escapeHtml(trap.scene)}</p>`,
@@ -349,7 +354,7 @@ function buildTrapJournal(session, trap) {
 function buildNpcScriptJournal(session) {
   return {
     name: `${session.title} - NPC Scripts`,
-    folderName: "Foundry Capital Session Prep",
+    folderName: `${worldTitle()} Session Prep`,
     content: [
       `<h1>${escapeHtml(session.title)} NPC Scripts</h1>`,
       ...session.npcs.map((npc) =>
@@ -382,7 +387,7 @@ function buildScene(scene) {
     door: wall.door ?? 0,
     ds: wall.ds ?? 0,
     flags: {
-      foundrycapital: {
+      [flagScope]: {
         sourceKey: wall.id,
       },
     },
@@ -399,7 +404,7 @@ function buildScene(scene) {
       luminosity: light.config?.luminosity ?? 0.5,
     },
     flags: {
-      foundrycapital: {
+      [flagScope]: {
         sourceKey: light.id,
       },
     },
@@ -427,7 +432,7 @@ function buildScene(scene) {
     walls,
     lights,
     flags: {
-      foundrycapital: {
+      [flagScope]: {
         sourceId: scene.id,
         purpose: scene.purpose,
         plannedTokens: scene.tokens ?? [],
@@ -536,20 +541,20 @@ if (fs.existsSync(campaignAssetsDir)) {
   fs.cpSync(campaignAssetsDir, moduleCampaignAssetsDir, { recursive: true });
 }
 
-const tsOut = `// Generated by uncle-yev/scripts/prepare_foundry_module.mjs. Edit the active campaign repo raw/foundry/*.json, not this file.
+const jsOut = `// Generated by uncle-yev/scripts/prepare_foundry_module.mjs. Edit the active campaign repo raw/foundry/*.json, not this file.
 
-export const CAMPAIGN_PREP_METADATA = ${serializeTs(generated.prepMetadata)} as const;
+export const CAMPAIGN_PREP_METADATA = ${serializeTs(generated.prepMetadata)};
 
-export const GENERATED_CAMPAIGN_NPCS = ${serializeTs(generated.npcs)} as const;
+export const GENERATED_CAMPAIGN_NPCS = ${serializeTs(generated.npcs)};
 
-export const GENERATED_CAMPAIGN_ITEMS = ${serializeTs(generated.items)} as const;
+export const GENERATED_CAMPAIGN_ITEMS = ${serializeTs(generated.items)};
 
-export const GENERATED_CAMPAIGN_JOURNALS = ${serializeTs(generated.journals)} as const;
+export const GENERATED_CAMPAIGN_JOURNALS = ${serializeTs(generated.journals)};
 
-export const GENERATED_CAMPAIGN_SCENES = ${serializeTs(generated.scenes)} as const;
+export const GENERATED_CAMPAIGN_SCENES = ${serializeTs(generated.scenes)};
 `;
 
-fs.writeFileSync(path.join(generatedDir, "campaign-content.generated.ts"), tsOut);
+fs.writeFileSync(path.join(generatedDir, "campaign-content.local.js"), jsOut);
 fs.writeFileSync(
   path.join(prepOutDir, `${sessionPrep.sessionId}.md`),
   renderMarkdownPrep({ world, factions, quests, locations, sessionPrep, sessions }),
