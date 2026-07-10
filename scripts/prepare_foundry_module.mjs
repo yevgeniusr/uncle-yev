@@ -43,6 +43,37 @@ function assertArray(name, value) {
   }
 }
 
+function walkFiles(dirPath) {
+  if (!fs.existsSync(dirPath)) return [];
+  return fs.readdirSync(dirPath, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(dirPath, entry.name);
+    return entry.isDirectory() ? walkFiles(fullPath) : [fullPath];
+  });
+}
+
+function assertNoGeneratedSvgAssets() {
+  const svgFiles = walkFiles(campaignAssetsDir).filter((filePath) => filePath.toLowerCase().endsWith(".svg"));
+  if (svgFiles.length > 0) {
+    throw new Error(
+      [
+        "Campaign-generated visual assets must be raster images, not SVG.",
+        "Use image generation and save maps, portraits, tokens, and handouts as PNG/WebP/JPEG.",
+        ...svgFiles.map((filePath) => `- ${path.relative(campaignRoot, filePath)}`),
+      ].join("\n"),
+    );
+  }
+}
+
+function assertCampaignAssetPath(context, assetPath) {
+  if (typeof assetPath !== "string") return;
+  if (!assetPath.startsWith("modules/uncle-yev/assets/campaign/")) return;
+  if (assetPath.toLowerCase().endsWith(".svg")) {
+    throw new Error(
+      `${context} points to an SVG campaign asset (${assetPath}). Campaign visuals must be image-generated raster assets.`,
+    );
+  }
+}
+
 function requiredString(context, value) {
   if (typeof value !== "string" || value.trim().length === 0) {
     throw new Error(`${context} must be a non-empty string`);
@@ -93,11 +124,11 @@ function worldTitle() {
   return world?.title ?? "Campaign";
 }
 
-function buildActorAction(action) {
+function buildActorAction(action, fallbackImg) {
   return {
     name: action.name,
     type: action.type ?? "feat",
-    img: action.img ?? "icons/svg/sword.svg",
+    img: action.img ?? fallbackImg,
     system: {
       description: { value: `<p>${escapeHtml(action.description ?? "")}</p>` },
       activation: { type: "action", cost: 1 },
@@ -148,7 +179,7 @@ function buildNpcActor(npc) {
           : undefined,
       },
     },
-    items: (npc.foundry?.actions ?? []).map(buildActorAction),
+    items: (npc.foundry?.actions ?? []).map((action) => buildActorAction(action, npc.img)),
     prototypeToken: {
       name: npc.name,
       actorLink: false,
@@ -579,6 +610,10 @@ assertArray("sessionPreps", sessionPreps);
 assertArray("sessions", sessions);
 requiredString("world.title", world.title);
 requiredString("sessionPrep.title", sessionPrep.title);
+assertNoGeneratedSvgAssets();
+npcs.forEach((npc) => assertCampaignAssetPath(`npc ${npc.id ?? npc.name} img`, npc.img));
+items.forEach((item) => assertCampaignAssetPath(`item ${item.id ?? item.name} img`, item.img));
+scenes.forEach((scene) => assertCampaignAssetPath(`scene ${scene.id ?? scene.name} img`, scene.img));
 
 const generated = {
   prepMetadata: {

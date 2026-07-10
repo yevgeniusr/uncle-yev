@@ -15,6 +15,7 @@ Turn a PDF into something a GM can run in Foundry without keeping the PDF open. 
 - Keep page references for every extracted fact, DC, monster, item, room, and handout.
 - Do not reproduce long copyrighted prose as public output. Use concise paraphrase plus page citations unless the user confirms the conversion is for private local use.
 - Rebuild maps and visuals as new play aids unless the user provides permission/source assets to import directly.
+- Do not generate campaign maps, portraits, tokens, handouts, or other visual play aids as SVG/vector placeholders. Use actual raster image generation and save project-bound assets as PNG/WebP/JPEG. SVG is acceptable only for upstream Foundry/core system icons that were not generated for the campaign.
 
 ## Workflow
 
@@ -31,13 +32,25 @@ Turn a PDF into something a GM can run in Foundry without keeping the PDF open. 
    - items, loot, traps, hazards, and roll tables
    - journals and handouts
    - session runbooks
-5. Generate or adapt maps/visuals where needed, with no embedded text unless labels are requested.
+5. Generate or adapt maps/visuals where needed, with no embedded text unless labels are requested. Use image generation for campaign visuals; do not substitute hand-authored SVGs, diagram placeholders, or vector mockups for maps, portraits, or tokens.
 6. Seed Foundry through the best available target:
    - direct Foundry module/API or MCP bridge
    - structured JSON files for the campaign repo
    - browser automation
    - manual import instructions
+   - upload raster campaign assets with `npm run upload:foundry-assets` after setting `FOUNDRY_CAMPAIGN_ROOT`
 7. Run the play-readiness gate before declaring done.
+
+## Foundry Asset Uploads
+
+Use `npm run upload:foundry-assets` to upload generated PNG assets through a GM browser session when direct server file access is unavailable.
+
+Rules:
+
+- Set `FOUNDRY_CAMPAIGN_ROOT` to the campaign repo before uploading.
+- The command uploads `raw/assets/maps/*.png` and `raw/assets/portraits/*.png` into the active Foundry world under `worlds/<world-id>/assets/<campaign-slug>/`.
+- Confirm the active world title before seeding actors, scenes, or journals. Uploading files is reversible; seeding documents into the wrong world is not.
+- Save the generated `raw/foundry/upload-report.json` and include its world id, world title, base path, and verified counts in the session handoff.
 
 ## Iterative Hardening Loop
 
@@ -56,6 +69,7 @@ Record each loop in the campaign repo under `.betabots/`, `raw/foundry/pdf-impor
 Minimum validator checks:
 
 - Every referenced map and portrait asset exists at the path Foundry will use.
+- No campaign-generated visual asset is `.svg`; generated maps, portraits, tokens, and handouts must be raster images produced through an image-generation workflow.
 - Every scene has width, height, grid, token starts, walls or wall notes, lighting or lighting notes, exits, read-aloud text, linked context, and an explicit trap/hazard value even when the answer is "none".
 - Every NPC has a portrait, want, fear/secret, voice, relationship map, three table lines, Foundry stats, tactics, morale, and loot/carry notes.
 - Every trap has trigger, detection, disable, effect, save/damage, counterplay, reset/depletion, and foreshadowing clues.
