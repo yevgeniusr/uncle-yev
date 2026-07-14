@@ -9,6 +9,7 @@ Uncle Yev is a local AI dungeon master plugin for FoundryVTT. It gives Codex, Cl
 - Creates campaigns, converts adventures into playable prep, and builds maps, NPCs, factions, encounters, loot, traps, journals, and handouts.
 - Observes Foundry state and can operate live table actions through a Foundry module API, MCP bridge, or browser automation.
 - Maintains a durable campaign ledger so multi-session plots, promises, secrets, and player preferences survive between sessions.
+- Detects reusable issues and feedback, proposes evidence-backed improvements, and can publish safe draft pull requests for maintainer review.
 - Supports Codex plugin usage, Claude command usage, and plain repository-based agent instructions.
 
 ## Quick Start
@@ -83,6 +84,7 @@ Uncle Yev should surprise players without betraying them. Twists must be foresha
 - `live-foundry-dm`: Runs or assists live Foundry sessions by observing table state, speaking as NPCs, moving tokens, rolling dice, applying damage/conditions, switching scenes, and taking notes within permission boundaries.
 - `post-session-processing`: Turns transcripts, recordings, chat logs, notes, and feedback into session summaries, memory updates, journal updates, NPC changes, loot logs, and next-session prep.
 - `live-speech-design`: Researches or designs speech-to-text and text-to-speech support so Uncle Yev can hear players and reply during live sessions.
+- `self-improving`: Detects reusable feedback and failures, separates them from private campaign issues, adds regression evidence, and opens deduplicated draft pull requests without self-merging.
 
 ## Repository Map
 

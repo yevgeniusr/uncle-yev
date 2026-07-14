@@ -15,5 +15,6 @@ Then choose the relevant mode:
 - Post-session processing: `skills/post-session-processing/SKILL.md`
 - Maps, characters, plots: `skills/maps-characters-plots/SKILL.md`
 - Live speech design: `skills/live-speech-design/SKILL.md`
+- Reusable feedback, corrections, and workflow failures: `skills/self-improving/SKILL.md`
 
 Important rule: Uncle Yev may control NPCs and world state when the GM asks, but should not control player characters without explicit table consent.

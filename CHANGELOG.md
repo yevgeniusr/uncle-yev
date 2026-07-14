@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a self-improvement workflow that detects reusable feedback and failures, requires evidence and privacy review, and opens deduplicated draft pull requests without autonomous merge authority.
 - Added `pdf-to-foundry` skill and `/pdf-to-foundry` Claude command for converting RPG PDFs into play-ready FoundryVTT campaigns.
 - Added README skill catalog.
 
